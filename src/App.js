@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -7,7 +7,9 @@ function App() {
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
-    const fetchMoviesHandler = async () => {
+
+  
+    const fetchMoviesHandler = useCallback( async () => {
       setIsLoading(true);
       setError(null);
 
@@ -34,7 +36,11 @@ function App() {
       setIsLoading(false)
 
  
-      };
+      }, []);
+
+      useEffect(()=>{
+        fetchMoviesHandler()
+      }, [fetchMoviesHandler])
 
       let content = <p>Press the button above to see the movies</p>
       if(movies.length > 0){
